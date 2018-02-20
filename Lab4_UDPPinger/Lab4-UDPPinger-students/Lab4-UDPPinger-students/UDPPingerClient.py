@@ -5,13 +5,13 @@ import time
 from socket import *
 
 # Get the server hostname and port as command line arguments
-host = '127.0.0.1'#input('Fill in server host address\n')
-port = 12000#int(input('Fill in server host port\n'))
+host = input('Fill in server host address\n')
+port = int(input('Fill in server host port\n'))
 timeout = 1 # in seconds
 
 # Create UDP client socket
 # FILL IN START
-clientSocket =socket(AF_INET, SOCK_DGRAM)
+clientSocket = socket(AF_INET, SOCK_DGRAM)
 # Set socket timeout as 1 second
 clientSocket.settimeout(timeout)
 
@@ -30,19 +30,17 @@ while ptime < 10:
     	# FILL IN START
 	    # Record the "sent time"
         sentTime = time.time()
-        print(sentTime)
 	    # Send the UDP packet with the ping message
-        clientSocket.sendto(data,(host,port))
-        print('test')
+        clientSocket.sendto(data.encode(),(host,port))
 	    # Receive the server response
         response, serverAddress = clientSocket.recvfrom(1024)
 	    # Record the "received time"
         recvTime = time.time()
 	    # Display the server response as an output
-        print('Message from server: ' + response + '\n')
+        print('Message from server: ' + response.decode() + '\n')
 	    # Round trip time is the difference between sent and received time
         RTT = recvTime - sentTime
-        print(RTT)
+        print("RTT = " + str(RTT))
         # FILL IN END
     except:
         # Server does not response
